@@ -1,0 +1,22 @@
+debug: false
+spring:
+  datasource:
+    primary:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/aonebakery?useUnicode=true&characterEncoding=utf-8
+      username: "root"
+      password: "123456"
+    secondary:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      jdbc-url: jdbc:sqlserver://btsa1.tact.com.hk:1433;DatabaseName=mrs
+      username: ai
+      password: a1ai2022
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+minio:
+  extranet: http://jingjiang.local:3000
+  endpoint: http://jingjiang.local:3000
+  access-key: minio
+  secret-key: "&WdrrY@P5f4nij"

@@ -1,0 +1,46 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.8'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'com.google.cloud.tools.jib' version '3.2.1'
+}
+
+group = 'com.remoc'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.minio:minio:8.4.1'
+    implementation 'org.json:json:20220320'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'org.bytedeco:javacv:1.5.7'
+    implementation 'org.bytedeco:ffmpeg:5.0-1.5.7:linux-x86_64'
+    implementation 'org.bytedeco:ffmpeg:5.0-1.5.7:macosx-arm64'
+    implementation 'org.bytedeco:ffmpeg:5.0-1.5.7:windows-x86_64'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jib {
+    container {
+        jvmFlags = ['-Dorg.bytedeco.javacpp.maxbytes=0G', '-Dorg.bytedeco.javacpp.maxPhysicalBytes=0G']
+        args = ["--spring.profiles.active=prod"]
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
